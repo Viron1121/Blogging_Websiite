@@ -7,11 +7,8 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    //
-
-    // app/Http/Controllers/PostController.php
-    public function index()
-    {
+      public function index()
+    {   
         $posts = Post::with('user')->latest()->paginate(10);
         return view('posts.index', compact('posts'));
     }
@@ -46,14 +43,13 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        $this->authorize('update', $post);
+       
         return view('posts.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
     {
-        $this->authorize('update', $post);
-
+      
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',

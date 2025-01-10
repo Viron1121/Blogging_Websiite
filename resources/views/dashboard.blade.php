@@ -10,18 +10,32 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
+
+                    <h1>All Blog Posts</h1>
+                    @isset($posts)
+                        @if($posts->count())
+                            @foreach ($posts as $post)
+                                <div>
+                                    <h3><a href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a></h3>
+                                    <p>{{ $post->description }}</p>
+                                    <p>Posted by {{ $post->user->name }} | {{ $post->created_at->diffForHumans() }}</p>
+                                    <a href="{{ route('posts.edit', $post->id) }}">Edit</a>
+                                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            @endforeach
+                            {{ $posts->links() }} <!-- Pagination -->
+                        @else
+                            <p>No posts found.</p>
+                        @endif
+                    @else
+                        <p>Posts data is not available yet.</p>
+                    @endisset
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
-
-<!-- resources/views/dashboard.blade.php -->
-{{-- 
-@extends('layouts.app')
-
-@section('content')
-    <h1>Welcome to Your Dashboard</h1>
-    <p>Here you can view your blog posts.</p>
-    <a href="{{ route('posts.create') }}">Create a New Blog Post</a>
-@endsection --}}
