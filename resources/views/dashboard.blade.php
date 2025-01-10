@@ -15,3 +15,13 @@
         </div>
     </div>
 </x-app-layout>
+
+<!-- resources/views/dashboard.blade.php -->
+{{-- 
+@extends('layouts.app')
+
+@section('content')
+    <h1>Welcome to Your Dashboard</h1>
+    <p>Here you can view your blog posts.</p>
+    <a href="{{ route('posts.create') }}">Create a New Blog Post</a>
+@endsection --}}
